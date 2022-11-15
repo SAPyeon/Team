@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.spring2.mapper.ReviewMapper">
+  	<resultMap type="org.spring2.model.MemberVO" id="MemberVO">
+  		<result column="name" property="name" />
+		<result column="userImg" property="userImg" />
+		
+  	</resultMap>
+  	<resultMap type="org.spring2.model.ReviewVO" id="ReviewVO">
+  		<result column="id" property="id" />
+  		<result column="rno" property="rno" />
+  		<result column="content" property="content" />
+  		<result column="scope" property="scope" />
+		<result column="regdate" property="regdate" />
+		<result column="likeNum" property="likeNum" />
+		<result column="uuid" property="uuid" />
+		<result column="uploadpath" property="uploadpath" />
+		<result column="filename" property="filename" />
+		<collection property="mvo" resultMap="MemberVO"></collection>
+  	</resultMap>
+  	<select id="reviewable" resultType="org.spring2.model.OrderVO">
+  		select * from orderP
+  		where id=#{id} and pno =#{pno}
+  	</select>
+	
+	<select id="list" resultMap="ReviewVO">
+		select *
+		from(
+			select @rownum:=@rownum+1 rownum, r.*
+		    from review r,(select @rownum:=0) as tmp
+			where pno=${search}		    
+		) as reviewlist
+		join member
+		on reviewlist.id = member.id
+		order by likeNum desc;
+  	</select>
+  	
+  	<select id="total" resultType="int">
+  		select count(*) from review
+  		where pno=${search}
+  	</select>
+  	
+  	<insert id="write">
+  		insert into review(pno, id, scope, content, uuid, uploadpath, filename, image)
+		values(#{pno},#{id},#{scope},#{content},#{uuid},#{uploadpath},#{filename},#{image}) 
+  	</insert>
+  	
+  	<select id="pro" resultType="org.spring2.model.BoardVO">
+  		select * from product
+  		where pno=${search}
+  	</select>
+  	
+  	<select id="findLike" resultType = "int">
+  	select rno from review_like
+	where rno = #{rno} and id = #{id}
+  	</select>
+  	<insert id="likeAdd">
+  	insert into review_like(id,rno)
+  	values(#{id},#{rno})
+  	</insert>
+  	
+  	<delete id="likeRemove">
+  		DELETE FROM	review_like WHERE id=#{id} and rno=#{rno}
+  	</delete>
+  	
+  	<update id="likeUpdate">
+  		UPDATE 
+  			review 
+  		SET 
+  		<choose>
+  			<when test="uuid == 'u'.toString()">
+  			likeNum = likeNum + 1 
+  			</when>
+  			<otherwise>
+  			likeNum = likeNum - 1
+  			</otherwise>
+  		</choose>
+  		WHERE
+  			rno=#{rno}
+  	</update>
+  	<delete id="remove">
+  	DELETE FROM	review WHERE rno=#{rno}
+  	</delete>
+  	<select id="findReview" resultType="org.spring2.model.ReviewVO">
+  		select *
+  		from review
+  		where pno=#{pno} and rno=#{rno}
+  	</select>	
+  	<update id="modify">
+  		update review
+		set content = #{content}, scope = #{scope}, uuid = #{uuid}, 
+		uploadpath = #{uploadpath}, filename = #{filename} , image = #{image}
+		where pno=#{pno} and rno=#{rno}
+  	</update>
+</mapper>

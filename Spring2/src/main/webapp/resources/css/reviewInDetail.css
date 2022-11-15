@@ -1,0 +1,175 @@
+@charset "UTF-8";
+/* 리뷰별표 */
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+  margin: 0 auto;
+}
+ 
+.star-ratings-fill {
+  color: #b6b5af;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
+/* 리뷰 평점 */
+#Rscopecnt>table{
+	height: 100%;
+	width: 90%;
+}
+#Rscopecnt>table,tr,td{
+	border : 1px solid black;
+  	border-collapse : collapse;
+  	word-break: break-all;
+  	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+/* 리뷰 작성 링크 */
+#Rwritelink, #Iwritelink{
+	text-align: right;
+	margin-right: 5%;
+	position: relative;
+    left: 58px;
+    bottom: 10px;
+}
+
+#Rwritelink>a, #Rwritelink>p>a{
+	color:#8bace9;
+	font-weight: bold;
+	
+}
+
+#Rwritelink>a:hover, #Rwritelink>p>a:hover{
+	color: #868686; 
+	text-decoration: underline;
+}
+/* 리뷰 리스트 */
+
+#Rlist>table, #Ilist>table{
+	height: 100%;
+	width: 90%;
+}
+#Rlist>table,tr,td, #Ilist>table,tr,td{
+	border : 1px solid #c0c0c0;
+  	border-collapse : collapse;
+  	word-break: break-all;
+  	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+@charset "UTF-8";
+#detail{
+	height: 100%;
+	margin: 0 auto;
+}
+#review{
+	height: 100%;
+	margin: 0 auto;
+}
+#gotoD{
+	color: #8bace9;
+    font-weight: bold;
+    position: relative;
+    left: 539px;
+}
+#scopecnt, #pro{
+	height: 100%;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#scopecnt>table, #pro>table{
+	height: 100%;
+	width:100%;	
+}
+#index{
+	height: 20px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+#list, #write{
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#list>table, #write>form>table{
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.t_score, .t_score tr,.t_score td,.t_score th{
+	border : 1px solid #c0c0c0;;
+  	border-collapse : collapse;
+  	word-break: break-all;
+}
+th{
+	width: 20%;
+}
+h3, #paging{
+	margin-top: 10px;
+	margin-bottom: 10px;
+} 
+.btn_like:hover{
+	cursor: pointer;
+}
+.likeNum{
+	background-color: transparent;
+	border: none;
+	width: 10px;
+    font-size: 16px;
+}
+.rcontent{
+	text-align: left;
+}
+/* 이미지크기조절 */
+.reviewImg{
+	width: 100px;
+    height: 104px;
+    object-fit: cover;
+}
+.reviewImg:hover{
+	cursor: pointer;
+}
+/* 페이징버튼 */
+.btn_pa{
+	color:black;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.btn_pa:hover{
+	text-decoration: underline;
+}
+.active{
+	border: 1px solid blue;
+	color: blue;
+}
+.paging{
+	width: 33px;
+    height: 29px;
+    cursor: pointer;
+}
+.click{
+	text-decoration: underline;
+}

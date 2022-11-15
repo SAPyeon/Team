@@ -1,0 +1,42 @@
+@charset "UTF-8";
+#container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#form {
+	margin: 0 auto;
+	width: 50%;
+}
+
+table{
+	margin: 0 auto;
+}
+table,tr{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+td{
+	border-left:1px solid black;
+	text-align: left;
+	height: 33px;
+}
+table input{
+	width : 500px;
+	height: 33px;
+	border:none !important;
+}
+select{
+	width : 504px;
+	height: 33px;
+	border:none;
+}
+
+#content{
+	border: none;
+    width: 500px;
+}
+#btn{
+	margin-top:10px;
+	text-align: center;
+}

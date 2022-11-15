@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.spring2.mapper.InquiryMapper">
+	
+	<select id="Ilist" resultType="org.spring2.model.InquiryVO">
+		select @rownum:=@rownum+1 rownum, i.*
+		from inquiry i,(select @rownum:=0) as tmp
+		where pno=#{pno}
+		order by ino desc
+  	</select>
+	
+	<select id="list" resultType="org.spring2.model.InquiryVO">
+		select *
+		from(
+			select @rownum:=@rownum+1 rownum, i.*
+		    from inquiry i,(select @rownum:=0) as tmp
+			where pno=#{search} 
+		    order by ino desc
+		) as inquirylist
+		<![CDATA[
+		where rownum > (#{pageNum}-1)*#{amount} and rownum <= #{pageNum}*#{amount}
+		]]>
+	</select>
+	
+	<select id="total" resultType="int">
+  		select count(*) from inquiry
+  		where pno=#{search}
+  	</select>
+  	
+	<select id="pro" resultType="org.spring2.model.BoardVO">
+  		select * from product
+  		where pno=#{search}
+  	</select>
+  	
+	<insert id="write">
+  		insert into inquiry(pno,id,question,secret)
+		values(#{pno},#{id},#{question},#{secret})
+  	</insert> 
+  	
+  	<select id="detail" resultType="org.spring2.model.InquiryVO">
+  		select * from inquiry
+		where ino=#{ino}
+  	</select>
+  	
+  	<insert id="answer">
+  		update inquiry
+		set answer = #{answer}
+		where ino=#{ino}
+  	</insert>
+  	
+  	<delete id="remove">
+  		delete from inquiry
+		where ino=#{ino}
+  	</delete>
+  	
+</mapper>

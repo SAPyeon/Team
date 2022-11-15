@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.spring2.mapper.CouponMapper">
+	<insert id="signUpCoupon">
+		INSERT INTO coupon_target (id,cpno,category_area,category_type,exp_date)
+		VALUES (#{id},#{cpno},#{category_area},#{category_type},#{exp_date})
+	</insert>
+	<resultMap type="org.spring2.model.CouponVO" id="CouponVO">
+		<result column="cptype" property="cptype" />
+		<result column="cpname" property="cpname" />
+		<result column="cpmax" property="cpmax" />
+		<result column="cpreq" property="cpreq" />
+		<result column="cpvalue" property="cpvalue" />
+	</resultMap>
+	<resultMap type="org.spring2.model.CouponTargetVO"
+		id="CouponTargetVO">
+		<result column="id" property="id" />
+		<result column="cpno" property="cpno" />
+		<result column="cptno" property="cptno" />
+		<result column="category_area" property="category_area" />
+		<result column="category_type" property="category_type" />
+		<result column="doApply" property="doApply" />
+		<result column="exp_date" property="exp_date" />
+		<collection property="cpvo" resultMap="CouponVO" />
+	</resultMap>
+	<select id="couponGet" resultMap="CouponTargetVO">
+		SELECT 
+			c.*,exp_date,doApply,category_area,category_type,cptno
+		FROM
+			coupon_target ct
+		JOIN
+			coupon c
+		ON
+			ct.cpno = c.cpno
+		WHERE
+			(
+			id=#{pname}
+		and
+			category_area=#{category_area}
+		and
+			used = false
+			)
+		or
+			(
+			id=#{pname}
+		and
+			category_type=#{category_type}
+		and
+			used = false
+			)
+		or
+			(
+			id=#{pname}
+		and
+			category_area=0
+		and
+			used = false
+			)
+		;
+	</select>
+	
+	<select id="couponGetOnce" resultMap="CouponTargetVO">
+		SELECT 
+			c.*,exp_date,cptno
+		FROM
+			coupon_target ct
+		JOIN
+			coupon c
+		ON
+			ct.cpno = c.cpno
+		WHERE
+			id=#{id}
+		and
+			ct.cptno=#{cptno}
+		;
+	</select>
+	
+	<update id="attachCoupon">
+		UPDATE cart
+		SET 
+		cptno=#{cptno}
+		WHERE id=#{id} 
+		and	pno=#{pno}
+	</update>
+	
+	<update id="attachCoupon2">
+		UPDATE coupon_target
+		SET
+		doApply=#{pno}
+		WHERE id=#{id}
+		and used = false
+		and cptno=#{cptno}
+	</update>
+	
+	<update id="detachCoupon">
+		UPDATE cart
+		SET 
+		cptno=0
+		<if test="b_quantity == -2">
+		, doOrder = false
+		</if>
+		WHERE id=#{id}
+		<if test="b_quantity != -2">
+		and	pno=#{pno}
+		</if> 
+	</update>
+	
+	<update id="detachCoupon2">
+		UPDATE coupon_target
+		SET
+		doApply=0
+		WHERE id=#{id}
+		and used = false
+		<if test="b_quantity != -2">
+		and doApply=#{pno}
+		</if>
+	</update>
+	
+	<update id="removeCoupon">
+		UPDATE coupon_target
+		SET used = true
+		WHERE
+		id=#{id} and cptno=#{cptno} and doApply != 0
+	</update>
+	
+	<insert id="createCoupon">
+		INSERT INTO coupon(cpname,cptype,cpvalue,cpreq,cpmax)
+		VALUES(#{cpname},#{cptype},#{cpvalue},#{cpreq},#{cpmax})
+	</insert>
+	
+	<select id="viewCoupon" resultType="org.spring2.model.CouponVO">
+		SELECT * FROM coupon WHERE cpno != 0
+	</select>
+	
+	<delete id="deleteCoupon">
+		DELETE
+		FROM coupon
+		WHERE cpno = #{cpno}
+	</delete>
+	
+	<select id="couponDetail" resultType="org.spring2.model.CouponVO">
+		SELECT * FROM coupon WHERE cpno = #{cpno}
+	</select>
+	
+	<select id="categoryGet" resultType="org.spring2.model.CategoryVO">
+		SELECT *
+		FROM
+		<choose>
+			<when test="cname == 'area'.toString()">
+			category_area
+			</when>
+			<otherwise>
+			category_type
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="sendCoupon">
+		INSERT INTO coupon_target(id,category_area,category_type,cpno,exp_date)
+		VALUES (#{id},#{category_area},#{category_type},#{cpno},#{exp_date})
+	</insert>
+	
+	<delete id="refreshCoupon">
+		DELETE FROM coupon_target
+		<![CDATA[
+		WHERE
+			exp_date < now() and used = false
+		]]>
+	</delete>
+</mapper>

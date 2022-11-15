@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+/* 문의 작성 링크 */
+#Iwritelink{
+	text-align: right;
+	margin-right: 5%;
+}
+#Iwritelink>p{
+	color:black;
+}
+#Iwritelink>a, #Iwritelink>p>a, #Imore>a{
+	color:#8bace9;
+	font-weight: bold;
+}
+#Iwritelink>a:hover, #Iwritelink>p>a:hover, #Imore>a:hover{ 
+	color: #868686; 
+	text-decoration: underline;
+}
+
+/* 문의 리스트 */
+
+#privqna>.title{
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#Ilist>table{
+	height: 100%;
+	width: 90%;
+	background-color: white;
+}
+#Ilist>table,tr,td{
+	border : 1px solid #c0c0c0;
+  	border-collapse : collapse;
+  	word-break: break-all;
+  	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.hidden{
+	display: none;
+}
+tr{
+	height: 40px;
+}
+th,td{
+	width: 20%;
+}
+.tal{
+	text-align: left;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+#answer{
+	background-color: #f2f7fd;
+}
+#notcomplete{
+	font-weight: bold;
+	color:#c0c0c0;
+}
+#complete {
+	color: #8bace9;
+	font-weight: bold;
+}
+
+
