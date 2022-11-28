@@ -38,7 +38,7 @@ JQeury
 -----------------------------------
 #### 1.상품 등록 페이지  
 Controller : BoardController
- : /board/list
+ : /board/write
 
 상품관리자만 등록 가능하게 하기
 
@@ -56,6 +56,8 @@ Controller : BoardController
 
 
 #### 2.상품 목록 리스트
+Controller : BoardController
+ : /board/list
 
 사진과 함께 등록
 
@@ -76,6 +78,8 @@ Controller : BoardController
 
 
 #### 3.상품상세페이지
+Controller : BoardController
+ : /board/detail
 
 해당 상품을 보여주고 구매하기로 바로 결제하기
 
@@ -96,6 +100,7 @@ Controller : BoardController
 ​
 
 #### 4.상품상세페이지 안 리뷰리스트
+Controller : ReviewController : /reviewlist/{pno}
 
 로그인을 안 할 시 '리뷰쓰기' 대신 '로그인하세요'가 나오고 버튼 클릭 시 로그인 페이지로 이동
 
@@ -124,6 +129,7 @@ Controller : BoardController
 ​
 
 #### 5. 리뷰쓰기페이지
+Controller : ReviewController : /board/reviewwrite
 
 리뷰 별표모양으로 점수 찍기
 
@@ -140,6 +146,7 @@ Controller : BoardController
 
 
 #### 6. 상품등록에 수정페이지, 리뷰쓰기에 수정페이지 작성
+Controller : ReviewController : /board/reviewremove , /board/reviewmodify
 
 글쓰기 페이지와 동일하게 하고 해당 내용을 불러오기
 
